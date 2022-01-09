@@ -1,1 +1,39 @@
-Setup 
+<div class="setup">
+  <form [formGroup]="pollForm">
+    <div class="setup__field setup__field--question">
+      <div class="p-field">
+        <input id="question" type="text" [maxLength]="maxLength" pInputText formControlName="question" placeholder="Type a question" />
+      </div>
+    </div>
+
+    <ng-container formArrayName="options">
+      <ng-container *ngFor="let optionForm of options.controls; let i = index">
+        <div class="setup__field" [formGroup]="optionForm">
+          <div class="p-inputgroup">
+            <input type="text" [maxLength]="maxLength" pInputText placeholder="Type an answer" formControlName="option">   
+            <button 
+              type="button" 
+              pButton pRipple 
+              icon="pi pi-times" 
+              class="p-button-danger"
+              [disabled]="!enableRemoveOption()"
+              (click)="removeOption(i)"></button>      
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <div class="setup__field">
+      <div class="p-inputgroup">
+        <input type="text" pInputText [maxLength]="maxLength" placeholder="Type an answer" formControlName="newOption" >   
+        <button 
+          type="button"
+          pButton pRipple 
+          class="p-button-success" 
+          [disabled]="!enableAddOption()"
+          (click)="addOption()">Add</button>      
+      </div>
+    </div>
+
+  </form>
+</div>
