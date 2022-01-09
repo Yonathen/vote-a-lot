@@ -22,4 +22,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('vote-a-lot');
   });
 
+  it('should render title', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('.content span')?.textContent).toContain('vote-a-lot app is running!');
+  });
 });
