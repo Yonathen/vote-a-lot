@@ -1,0 +1,19 @@
+.setup {
+  float: left;
+  width: 100%;
+  height: 100%;
+
+  &__field {
+    float: left;
+    width: 100%;
+    padding: 5px 0;
+
+    &--question {
+      width: calc(100% - 48px);
+
+      input {
+        width: 100%;
+      }
+    }
+  }
+}
