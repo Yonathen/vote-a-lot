@@ -1,0 +1,19 @@
+@import '../../../styles/shared';
+
+.vote {
+  float: left;
+  width: 100%;
+  height: 100%;
+
+  &__field {
+    float: left;
+    width: 100%;
+    padding: 5px 0;
+    font-size: 16px;
+
+    &--question {
+      font-family: 'LatoWebMedium';
+      font-size: 18px;
+    }
+  }
+}

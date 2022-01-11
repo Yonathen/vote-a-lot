@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {InputTextModule} from 'primeng/inputtext';
 import {CardModule} from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 import { myPollReducer } from './state/my-poll.reducer';
 import { StoreModule } from '@ngrx/store';
@@ -30,6 +31,7 @@ import { SetupComponent } from './components/setup/setup.component';
     CardModule,
     ButtonModule,
     InputTextModule,
+    RadioButtonModule,
     StoreModule.forRoot({ poll: myPollReducer })
   ],
   providers: [],

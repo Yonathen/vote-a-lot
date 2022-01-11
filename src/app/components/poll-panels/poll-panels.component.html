@@ -1,12 +1,18 @@
 <div class="panel">
   <div subheader=" " class="panel__setup">
     <p-card class="panel__card">
-      <app-setup [loaded]="loaded"></app-setup>
-
+      <app-setup 
+        [reset]="reset"
+        [myPoll]="myPoll"
+        (updateQuestionEmitter)="updateQuestion($event)"
+        (updateOptionEmitter)="updateOption($event)"
+        (addOptionEmitter)="addOption($event)"
+        (removeOptionEmitter)="removeOption($event)">
+      </app-setup>
       <ng-template pTemplate="footer">
         <div class="panel__footerInfo">{{numberOfOptions}}/10 possible answers</div>
         <div class="panel__button">
-          <p-button label="Reset" icon="pi pi-refresh" styleClass="p-button-danger p-button-sm"></p-button>
+          <p-button (click)="onReset()" label="Reset" icon="pi pi-refresh" styleClass="p-button-danger p-button-sm"></p-button>
         </div>
       </ng-template>
     </p-card>
@@ -14,7 +20,9 @@
 
   <div class="panel__vote">
     <p-card class="panel__card">
-      <app-vote></app-vote>
+      <app-vote
+        [myPoll]="myPoll">
+      </app-vote>
 
       <ng-template pTemplate="footer">
         <div class="panel__footerInfo"></div>

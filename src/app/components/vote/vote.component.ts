@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { ControlType } from 'src/app/enums/control-type';
+import { MyPoll } from 'src/app/interfaces/my-poll';
 import { MyPollState } from 'src/app/interfaces/my-poll-state';
 import { selectMyPoll } from 'src/app/state/my-poll.selectors';
 
@@ -11,23 +14,15 @@ import { selectMyPoll } from 'src/app/state/my-poll.selectors';
 })
 export class VoteComponent implements OnInit {
 
-  public myPoll$: Observable<MyPollState> = this.store.select(selectMyPoll);
-  public myPollState: MyPollState  = { poll: [] };
+  @Input() myPoll: MyPoll | undefined;
 
-  constructor(
-    private store: Store
-  ) { }
+  constructor(public fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.myPoll$.subscribe(myPollState => {
-      if( myPollState && myPollState.poll[0] ) {
-        this.myPollState = myPollState;
-      }
-    })
   }
 
   get isQuestionValid() {
-    const { question } = this.myPollState.poll[0];
+    const { question } = this.myPoll || {};
 
     if (!question) {
       return false;
@@ -37,7 +32,7 @@ export class VoteComponent implements OnInit {
   }
 
   get isOptionValid() {
-    const { options } = this.myPollState.poll[0];
+    const { options = [] } = this.myPoll || {};
 
     for( const option of options) {
       if(!option.label) {
@@ -49,8 +44,12 @@ export class VoteComponent implements OnInit {
   }
 
   get pollDetail() {
-    const {question, options} = this.myPollState.poll[0];
+    const { question, options = {} } = this.myPoll || {};
     return {question, options};
+  }
+
+  selectOption(index: number) {
+    
   }
 
 }
