@@ -1,8 +1,15 @@
 <div class="setup">
-  <form [formGroup]="pollForm">
+  <form *ngIf="loaded" [formGroup]="pollForm">
     <div class="setup__field setup__field--question">
       <div class="p-field">
-        <input id="question" type="text" [maxLength]="maxLength" pInputText formControlName="question" placeholder="Type a question" />
+        <input 
+          id="question" 
+          type="text" 
+          [maxLength]="maxLength" 
+          pInputText 
+          formControlName="question" 
+          placeholder="Type a question"
+          (keyup)="updateQuestion()" />
       </div>
     </div>
 
@@ -10,7 +17,13 @@
       <ng-container *ngFor="let optionForm of options.controls; let i = index">
         <div class="setup__field" [formGroup]="optionForm">
           <div class="p-inputgroup">
-            <input type="text" [maxLength]="maxLength" pInputText placeholder="Type an answer" formControlName="option">   
+            <input 
+              type="text" 
+              [maxLength]="maxLength" 
+              pInputText 
+              placeholder="Type an answer"  
+              formControlName="option"
+              (keyup)="updateOptions(i)">   
             <button 
               type="button" 
               pButton pRipple 

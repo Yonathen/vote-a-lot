@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { resetPoll } from 'src/app/state/my-poll.actions';
 
 @Component({
   selector: 'app-poll-panels',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PollPanelsComponent implements OnInit {
 
-  constructor() { }
+  public loaded: boolean = false;
+
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
+    this.reset();
+  }
+
+  reset() {
+    this.loaded = false;
+    this.store.dispatch(resetPoll());
   }
 
 }
