@@ -45,7 +45,7 @@ export class SetupComponent implements OnInit {
 
   ngOnInit(): void {
     this.myPoll$.subscribe(myPollState => {
-      if( myPollState && myPollState.poll[0] ) {
+      if( !this.loaded && myPollState && myPollState.poll[0] ) {
         this.loaded = myPollState.loaded || true;
         this.myPollState = myPollState;
         this.setPollForm();
@@ -90,10 +90,7 @@ export class SetupComponent implements OnInit {
     }
   }
 
-  removeOption(index: number) {
-    const { options } = this.myPollState.poll[0];
-    this.store.dispatch(removeOption({ uuid: options[index].uuid }))
-  }
+  
 
   updateQuestion() {
     const questionControl = this.pollForm.controls[ControlType.Question];
@@ -111,7 +108,16 @@ export class SetupComponent implements OnInit {
     }
   }
 
+  removeOption(index: number) {
+    const { options } = this.myPollState.poll[0];
+    if ( options.length > this.minOptions ) {
+      this.loaded = false;
+      this.store.dispatch(removeOption({ uuid: options[index].uuid }));
+    }
+  }
+
   addOption() {
+    this.loaded = false;
     const value = this.pollForm.controls[ControlType.NewOption].value;
     this.store.dispatch(addOption({ option : { uuid: uuidv4(), label: value, vote: 0 }}));
     this.pollForm.controls[ControlType.NewOption].setValue('');

@@ -18,22 +18,3 @@ export const selectAllOptions = createSelector(
   selectPoll,
   state => state.poll[0].options
 );
-
-export const selectIsValidState = createSelector(
-  selectPoll,
-  state => {
-    const {question, options} = state.poll[0];
-
-    if (!question) {
-      return false;
-    } 
-
-    for( const option of options) {
-      if(!option.label) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-)

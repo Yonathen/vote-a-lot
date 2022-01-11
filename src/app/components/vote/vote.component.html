@@ -1,1 +1,12 @@
-Vote
+<div *ngIf="isQuestionValid && isOptionValid">
+  <h1>{{pollDetail.question}}</h1>
+  <ul>
+    <li *ngFor="let option of pollDetail.options; let i = index">
+      {{option.label}}
+    </li>
+  </ul>
+</div>
+<div *ngIf="!isQuestionValid || !isOptionValid">
+  <p *ngIf="!isQuestionValid">Poll question is not set</p>
+  <p *ngIf="!isOptionValid">A minimum of two options must be set</p>
+</div>

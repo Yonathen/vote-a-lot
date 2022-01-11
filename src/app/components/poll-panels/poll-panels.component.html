@@ -4,7 +4,7 @@
       <app-setup [loaded]="loaded"></app-setup>
 
       <ng-template pTemplate="footer">
-        <div class="panel__footerInfo">3/10 possible answers</div>
+        <div class="panel__footerInfo">{{numberOfOptions}}/10 possible answers</div>
         <div class="panel__button">
           <p-button label="Reset" icon="pi pi-refresh" styleClass="p-button-danger p-button-sm"></p-button>
         </div>

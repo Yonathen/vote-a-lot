@@ -37,7 +37,7 @@ export const myPollReducer = createReducer(
   }),
   on(removeOption, (state, { uuid }) => {
     const stateCloned = _.cloneDeep(state);
-    const filteredOptions = stateCloned.poll[0].options?.filter(option => option.uuid === uuid);
+    const filteredOptions = stateCloned.poll[0].options?.filter(option => option.uuid !== uuid);
     stateCloned.poll[0].options = filteredOptions;
     return stateCloned;
   }),
