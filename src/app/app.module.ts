@@ -6,6 +6,9 @@ import {InputTextModule} from 'primeng/inputtext';
 import {CardModule} from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
+import { myPollReducer } from './state/my-poll.reducer';
+import { StoreModule } from '@ngrx/store';
+
 import { AppComponent } from './app.component';
 import { PollPanelsComponent } from './components/poll-panels/poll-panels.component';
 import { ChartComponent } from './components/chart/chart.component';
@@ -27,6 +30,7 @@ import { SetupComponent } from './components/setup/setup.component';
     CardModule,
     ButtonModule,
     InputTextModule,
+    StoreModule.forRoot({ poll: myPollReducer })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Store } from '@ngrx/store';
+import { storeServiceStub } from 'src/app/shared/test/store-service-stup';
 
 import { VoteComponent } from './vote.component';
 
@@ -8,7 +10,8 @@ describe('VoteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VoteComponent ]
+      declarations: [ VoteComponent ],
+      providers: [{provide: Store, useValue: storeServiceStub}]
     })
     .compileComponents();
   });
