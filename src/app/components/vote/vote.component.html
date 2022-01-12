@@ -1,1 +1,15 @@
-Vote
+<div class="vote">
+  <div *ngIf="!isQuestionValid || !isOptionValid">
+    <p *ngIf="!isQuestionValid">Poll question is not set</p>
+    <p *ngIf="!isOptionValid">A minimum of two options must be set</p>
+  </div>
+
+  <div *ngIf="isQuestionValid && isOptionValid">
+    <div class="vote__field vote__field--question">
+      {{pollDetail.question}}
+    </div>
+    <div class="vote__field" *ngFor="let option of pollDetail.options; let i = index">
+      <input type="radio" [value]="option.uuid" name="option" (change)="selectOption($event)" > {{option.label}}
+    </div>
+  </div>
+</div>

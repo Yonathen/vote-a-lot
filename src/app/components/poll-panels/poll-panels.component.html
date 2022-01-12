@@ -1,12 +1,18 @@
 <div class="panel">
   <div subheader=" " class="panel__setup">
     <p-card class="panel__card">
-      <app-setup></app-setup>
-
+      <app-setup 
+        [reset]="reset"
+        [myPoll]="myPoll"
+        (updateQuestionEmitter)="updateQuestion($event)"
+        (updateOptionEmitter)="updateOption($event)"
+        (addOptionEmitter)="addOption($event)"
+        (removeOptionEmitter)="removeOption($event)">
+      </app-setup>
       <ng-template pTemplate="footer">
-        <div class="panel__footerInfo">3/10 possible answers</div>
+        <div class="panel__footerInfo">{{numberOfOptions}}/10 possible answers</div>
         <div class="panel__button">
-          <p-button label="Reset" icon="pi pi-refresh" styleClass="p-button-danger p-button-sm"></p-button>
+          <p-button (click)="onReset()" label="Reset" icon="pi pi-refresh" styleClass="p-button-danger p-button-sm"></p-button>
         </div>
       </ng-template>
     </p-card>
@@ -14,12 +20,15 @@
 
   <div class="panel__vote">
     <p-card class="panel__card">
-      <app-vote></app-vote>
+      <app-vote
+        [myPoll]="myPoll"
+        (selectOptionEmitter)="selectOptionForVote($event)">
+      </app-vote>
 
       <ng-template pTemplate="footer">
         <div class="panel__footerInfo"></div>
         <div class="panel__button">
-          <p-button label="Vote" icon="pi pi-check" styleClass="p-button-info p-button-sm"></p-button>
+          <p-button (click)="voteForOption()" label="Vote" icon="pi pi-check" styleClass="p-button-info p-button-sm"></p-button>
         </div>
       </ng-template>
     </p-card>
@@ -27,10 +36,12 @@
 
   <div class="panel__chart">
     <p-card class="panel__card">
-      <app-chart></app-chart>
+      <app-chart
+        [myPoll]="myPoll">
+      </app-chart>
 
       <ng-template pTemplate="footer">
-        <div class="panel__footerInfo">Total vote : 11</div>
+        <div class="panel__footerInfo">Total vote : {{totalVote}}</div>
       </ng-template>
     </p-card>
   </div>

@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Store } from '@ngrx/store';
+import { storeServiceStub } from 'src/app/shared/test/store-service-stup';
 
 import { PollPanelsComponent } from './poll-panels.component';
 
@@ -8,7 +10,8 @@ describe('PollPanelsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PollPanelsComponent ]
+      declarations: [ PollPanelsComponent ],
+      providers: [{provide: Store, useValue: storeServiceStub}]
     })
     .compileComponents();
   });
