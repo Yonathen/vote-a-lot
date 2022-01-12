@@ -33,38 +33,5 @@ describe('SetupComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  describe('poll form', () => {
-    beforeEach(() => {
-      pollForm = component.pollForm;
-      question = component.pollForm.controls[ControlType.Question];
-      options = component.pollForm.controls[ControlType.Options];
-      newOption = component.pollForm.controls[ControlType.NewOption];
-    });
-
-    it('validates correctly when a form is empty', () => {
-      expect(pollForm.valid).toBeFalsy();
-      expect(question.valid).toBeFalsy();
-
-      for(let option of options.controls) {
-        expect(option?.controls['option'].valid).toBeFalsy();
-      }
-
-      expect(newOption.valid).toBeTruthy();
-    });
-
-
-    it('validates correctly when the form is filled', () => {
-      question.setValue('What is the value of pi?');
-      options.controls[0].controls['option'].setValue('3.14');
-      options.controls[1].controls['option'].setValue('3.144');
-
-      expect(pollForm.valid).toBeTruthy();
-      expect(question.valid).toBeTruthy();
-      for(let option of options.controls) {
-        expect(option?.controls['option'].valid).toBeTruthy();
-      }
-    })
-  });
 });
 
