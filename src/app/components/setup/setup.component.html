@@ -1,5 +1,5 @@
 <div class="setup">
-  <form *ngIf="loaded" [formGroup]="pollForm">
+  <form *ngIf="myPoll && loaded" [formGroup]="pollForm">
     <div class="setup__field setup__field--question">
       <div class="p-field">
         <input 
@@ -9,7 +9,7 @@
           pInputText 
           formControlName="question" 
           placeholder="Type a question"
-          (keyup)="updateQuestion()" />
+          (keyup)="onUpdateQuestion()" />
       </div>
     </div>
 
@@ -23,14 +23,14 @@
               pInputText 
               placeholder="Type an answer"  
               formControlName="option"
-              (keyup)="updateOptions(i)">   
+              (keyup)="onUpdateOption(i)">   
             <button 
               type="button" 
               pButton pRipple 
               icon="pi pi-times" 
               class="p-button-danger"
               [disabled]="!enableRemoveOption()"
-              (click)="removeOption(i)"></button>      
+              (click)="onRemoveOption(i)"></button>      
           </div>
         </div>
       </ng-container>
@@ -44,7 +44,7 @@
           pButton pRipple 
           class="p-button-success" 
           [disabled]="!enableAddOption()"
-          (click)="addOption()">Add</button>      
+          (click)="onAddOption()">Add</button>      
       </div>
     </div>
 
