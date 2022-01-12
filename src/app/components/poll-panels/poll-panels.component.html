@@ -36,7 +36,9 @@
 
   <div class="panel__chart">
     <p-card class="panel__card">
-      <app-chart></app-chart>
+      <app-chart
+        [myPoll]="myPoll">
+      </app-chart>
 
       <ng-template pTemplate="footer">
         <div class="panel__footerInfo">Total vote : {{totalVote}}</div>
