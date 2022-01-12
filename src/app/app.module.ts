@@ -7,6 +7,7 @@ import {CardModule} from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {ChartModule} from 'primeng/chart';
+import {ScrollPanelModule} from 'primeng/scrollpanel';
 
 import { myPollReducer } from './state/my-poll.reducer';
 import { StoreModule } from '@ngrx/store';
@@ -34,6 +35,7 @@ import { SetupComponent } from './components/setup/setup.component';
     ButtonModule,
     InputTextModule,
     RadioButtonModule,
+    ScrollPanelModule,
     StoreModule.forRoot({ poll: myPollReducer })
   ],
   providers: [],
