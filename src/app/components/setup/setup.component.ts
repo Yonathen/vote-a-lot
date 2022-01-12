@@ -1,23 +1,27 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Validators,FormControl,FormGroup,FormBuilder, FormArray } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { ControlType } from 'src/app/enums/control-type';
-import { MyPollState } from 'src/app/interfaces/my-poll-state';
-import { addOption, removeOption, updateOption, updatePoll } from 'src/app/state/my-poll.actions';
-import { selectMyPoll } from 'src/app/state/my-poll.selectors';
-import { v4 as uuidv4 } from 'uuid';
-
+import { MyPoll } from 'src/app/interfaces/my-poll';
 @Component({
   selector: 'app-setup',
   templateUrl: './setup.component.html',
   styleUrls: ['./setup.component.scss']
 })
-export class SetupComponent implements OnInit { 
+export class SetupComponent implements OnInit, OnChanges { 
 
-  @Input() loaded: boolean = false;
-  public myPoll$: Observable<MyPollState> = this.store.select(selectMyPoll);
-  public myPollState: MyPollState  = { poll: [] };
+  loaded: boolean = false;
+  @Input() reset: boolean = true;
+  @Input() myPoll: MyPoll | undefined;
+
+  @Output() updateQuestionEmitter: EventEmitter<string> 
+    = new EventEmitter<string>();
+  @Output() updateOptionEmitter: EventEmitter<{uuid: string, label: string}> 
+    = new EventEmitter<{uuid: string, label: string}>();
+  @Output() addOptionEmitter: EventEmitter<string> 
+    = new EventEmitter<string>();
+  @Output() removeOptionEmitter: EventEmitter<string> 
+    = new EventEmitter<string>();
 
   private _pollForm: FormGroup = new FormGroup({});
 
@@ -37,20 +41,23 @@ export class SetupComponent implements OnInit {
     this._pollForm = thePollForm;
   }
 
+  public get reload() {
+    return !this.loaded || this.reset;
+  }
+
   constructor(
-    public fb: FormBuilder,
-    private store: Store
+    public fb: FormBuilder
   ) {
   }
 
   ngOnInit(): void {
-    this.myPoll$.subscribe(myPollState => {
-      if( !this.loaded && myPollState && myPollState.poll[0] ) {
-        this.loaded = myPollState.loaded || true;
-        this.myPollState = myPollState;
-        this.setPollForm();
-      }
-    })
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes && this.myPoll && this.reload) {
+      this.setPollForm();
+      this.loaded = true;
+    }
   }
 
   enableRemoveOption(type: ControlType = ControlType.Option): boolean {
@@ -74,7 +81,7 @@ export class SetupComponent implements OnInit {
   }
 
   setPollForm() {
-    const { question, options } = this.myPollState.poll[0];
+    const { question = '', options = [] } = this.myPoll || {};
     this.pollForm = this.fb.group({
       [ControlType.Question]: this.getControl(ControlType.Question, question),
       [ControlType.NewOption]: this.getControl(ControlType.NewOption),
@@ -90,37 +97,35 @@ export class SetupComponent implements OnInit {
     }
   }
 
-  
-
-  updateQuestion() {
+  onUpdateQuestion() {
     const questionControl = this.pollForm.controls[ControlType.Question];
     if ( questionControl.valid ) {
-      this.store.dispatch(updatePoll({ question: questionControl.value }));
+      this.updateQuestionEmitter.emit(questionControl.value);
     }
   }
 
-  updateOptions(index: number) {
+  onRemoveOption(index: number) {
+    this.loaded = false;
+    const { options = [] } = this.myPoll || {};
+    if ( options.length > this.minOptions ) {
+      this.removeOptionEmitter.emit(options[index].uuid);
+    }
+  }
+
+  onAddOption() {
+    this.loaded = false;
+    const value = this.pollForm.controls[ControlType.NewOption].value;
+    this.addOptionEmitter.emit(value);
+    this.pollForm.controls[ControlType.NewOption].setValue('');
+  }
+
+  onUpdateOption(index: number) {
     const optionForm = this.options.at(index) as FormGroup;
     const optionControl = optionForm.controls[ControlType.Option];
     if (optionControl.valid) {
-      const { options } = this.myPollState.poll[0];
-      this.store.dispatch(updateOption({ uuid: options[index].uuid, label: optionControl.value }))
+      const { options = [] } = this.myPoll || {};
+      this.updateOptionEmitter.emit({ uuid: options[index].uuid, label: optionControl.value });
     }
-  }
-
-  removeOption(index: number) {
-    const { options } = this.myPollState.poll[0];
-    if ( options.length > this.minOptions ) {
-      this.loaded = false;
-      this.store.dispatch(removeOption({ uuid: options[index].uuid }));
-    }
-  }
-
-  addOption() {
-    this.loaded = false;
-    const value = this.pollForm.controls[ControlType.NewOption].value;
-    this.store.dispatch(addOption({ option : { uuid: uuidv4(), label: value, vote: 0 }}));
-    this.pollForm.controls[ControlType.NewOption].setValue('');
   }
 
 }
