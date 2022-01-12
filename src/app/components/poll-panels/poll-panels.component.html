@@ -21,13 +21,14 @@
   <div class="panel__vote">
     <p-card class="panel__card">
       <app-vote
-        [myPoll]="myPoll">
+        [myPoll]="myPoll"
+        (selectOptionEmitter)="selectOptionForVote($event)">
       </app-vote>
 
       <ng-template pTemplate="footer">
         <div class="panel__footerInfo"></div>
         <div class="panel__button">
-          <p-button label="Vote" icon="pi pi-check" styleClass="p-button-info p-button-sm"></p-button>
+          <p-button (click)="voteForOption()" label="Vote" icon="pi pi-check" styleClass="p-button-info p-button-sm"></p-button>
         </div>
       </ng-template>
     </p-card>
@@ -38,7 +39,7 @@
       <app-chart></app-chart>
 
       <ng-template pTemplate="footer">
-        <div class="panel__footerInfo">Total vote : 11</div>
+        <div class="panel__footerInfo">Total vote : {{totalVote}}</div>
       </ng-template>
     </p-card>
   </div>

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { MyPollState } from 'src/app/interfaces/my-poll-state';
-import { resetPoll, addOption, removeOption, updateOption, updatePoll } from 'src/app/state/my-poll.actions';
-import { selectMyPoll, selectTotalOptions } from 'src/app/state/my-poll.selectors';
+import { resetPoll, addOption, removeOption, updateOption, updatePoll, voteForOption } from 'src/app/state/my-poll.actions';
+import { selectMyPoll, selectSummationOfVotes, selectTotalOptions } from 'src/app/state/my-poll.selectors';
 
 import { v4 as uuidv4 } from 'uuid';
 @Component({
@@ -16,10 +16,14 @@ export class PollPanelsComponent implements OnInit {
   public numberOfOptions$: Observable<number> = this.store.select(selectTotalOptions);
   public numberOfOptions: number = 0;
   public reset: boolean = true;
+  public selectedOptionForVote: string = '';
 
 
-  public myPoll$: Observable<MyPollState> = this.store.select(selectMyPoll);
+  private myPoll$: Observable<MyPollState> = this.store.select(selectMyPoll);
   public myPollState: MyPollState  = { poll: [] };
+  private totalVote$: Observable<number> = this.store.select(selectSummationOfVotes);
+  public totalVote: number = 0;
+  
 
   constructor(private store: Store) { }
 
@@ -32,7 +36,9 @@ export class PollPanelsComponent implements OnInit {
 
         setTimeout(() => {this.reset = false})
       }
-    })
+    });
+
+    this.totalVote$.subscribe(totalVote => this.totalVote = totalVote);
   }
 
   get myPoll() {
@@ -59,6 +65,17 @@ export class PollPanelsComponent implements OnInit {
   updateOption(option: {uuid: string, label: string}) {
     const { uuid, label } = option;
     this.store.dispatch(updateOption({ uuid, label }));
+  }
+
+  voteForOption() {
+    if ( this.selectedOptionForVote ) {
+      this.store.dispatch(voteForOption({ uuid: this.selectedOptionForVote }));
+      this.selectedOptionForVote = '';
+    }
+  }
+
+  selectOptionForVote(uuid: string) {
+    this.selectedOptionForVote = uuid;
   }
 
 }

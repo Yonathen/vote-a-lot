@@ -9,7 +9,7 @@
       {{pollDetail.question}}
     </div>
     <div class="vote__field" *ngFor="let option of pollDetail.options; let i = index">
-      <input type="radio" [value]="option.uuid" name="option" > {{option.label}}
+      <input type="radio" [value]="option.uuid" name="option" (change)="selectOption($event)" > {{option.label}}
     </div>
   </div>
 </div>
