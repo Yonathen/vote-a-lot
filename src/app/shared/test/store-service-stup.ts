@@ -40,8 +40,6 @@ export const storeServiceStub = (empty: boolean = true) => {
     select(selector: any) {
       return of( mockPollState );
     },
-    dispatch(action: any) {
-      return mockPollState;
-    }
+    dispatch(action: any) { }
   }
 };
