@@ -1,5 +1,4 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { MyPoll } from '../interfaces/my-poll';
 import { MyPollState } from '../interfaces/my-poll-state';
 import * as _ from 'lodash';
 

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { MyPollState } from 'src/app/interfaces/my-poll-state';
-import { resetPoll, addOption, removeOption, updateOption, updatePoll, voteForOption } from 'src/app/state/my-poll.actions';
-import { selectMyPoll, selectSummationOfVotes, selectTotalOptions } from 'src/app/state/my-poll.selectors';
+import { MyPollState } from '../../interfaces/my-poll-state';
+import { resetPoll, addOption, removeOption, updateOption, updatePoll, voteForOption } from '../../state/my-poll.actions';
+import { selectMyPoll, selectSummationOfVotes, selectTotalOptions } from '../../state/my-poll.selectors';
 
 import { v4 as uuidv4 } from 'uuid';
 @Component({

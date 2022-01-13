@@ -1,7 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { MyPoll } from '../interfaces/my-poll';
 import { MyPollState } from '../interfaces/my-poll-state';
-import { Option } from '../interfaces/option';
 import { updateOption, updatePoll, voteForOption, removeOption, addOption, resetPoll } from './my-poll.actions';
 import { v4 as uuidv4 } from 'uuid';
 import * as _ from 'lodash';

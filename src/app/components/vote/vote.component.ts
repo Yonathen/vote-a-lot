@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { MyPoll } from 'src/app/interfaces/my-poll';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MyPoll } from '../../interfaces/my-poll';
 
 @Component({
   selector: 'app-vote',
@@ -9,26 +9,16 @@ import { MyPoll } from 'src/app/interfaces/my-poll';
 export class VoteComponent implements OnInit {
 
   @Input() myPoll: MyPoll | undefined;
-  @Input() resetVote: boolean = true;
   @Output() selectOptionEmitter: EventEmitter<string> 
     = new EventEmitter<string>();
-  
-  myLocalPoll: MyPoll | undefined;
 
   constructor() { }
 
   ngOnInit(): void {
   }
-  
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes && this.myPoll && this.resetVote) {
-      this.myLocalPoll = this.myPoll;
-    }
-  }
 
   get isQuestionValid() {
-    const { question } = this.myLocalPoll || {};
-
+    const { question } = this.myPoll || {};
     if (!question) {
       return false;
     } 
@@ -37,7 +27,7 @@ export class VoteComponent implements OnInit {
   }
 
   get isOptionValid() {
-    const { options = [] } = this.myLocalPoll || {};
+    const { options = [] } = this.myPoll || {};
 
     for( const option of options) {
       if(!option.label) {
@@ -49,7 +39,7 @@ export class VoteComponent implements OnInit {
   }
 
   get pollDetail() {
-    const { question, options = {} } = this.myLocalPoll || {};
+    const { question, options = {} } = this.myPoll || {};
     return {question, options};
   }
 
