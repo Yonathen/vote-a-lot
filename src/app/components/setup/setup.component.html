@@ -1,10 +1,10 @@
 <p-scrollPanel [style]="{width: '100%', height: '100%'}">
   <div class="setup">
-    <form *ngIf="myPoll && loaded" [formGroup]="pollForm">
+    <form id="setup-form" *ngIf="myPoll && loaded" [formGroup]="pollForm">
       <div class="setup__field setup__field--question">
         <div class="p-field">
           <input 
-            id="question" 
+            id="input-question" 
             type="text" 
             [maxLength]="maxLength" 
             pInputText 
@@ -19,6 +19,7 @@
           <div class="setup__field" [formGroup]="optionForm">
             <div class="p-inputgroup">
               <input 
+                [id]="'option-'+i"
                 type="text" 
                 [maxLength]="maxLength" 
                 pInputText 
@@ -26,6 +27,7 @@
                 formControlName="option"
                 (keyup)="onUpdateOption(i)">   
               <button 
+                [id]="'button-remove-'+i"
                 type="button" 
                 pButton pRipple 
                 icon="pi pi-times" 
@@ -39,8 +41,9 @@
 
       <div class="setup__field">
         <div class="p-inputgroup">
-          <input type="text" pInputText [maxLength]="maxLength" placeholder="Type an answer" formControlName="newOption" >   
+          <input id="input-add-option" type="text" pInputText [maxLength]="maxLength" placeholder="Type an answer" formControlName="newOption" >   
           <button 
+            id="button-add-option"
             type="button"
             pButton pRipple 
             class="p-button-success" 

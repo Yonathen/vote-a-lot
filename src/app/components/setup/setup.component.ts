@@ -1,8 +1,8 @@
 import { Component, OnInit, OnChanges, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Validators,FormControl,FormGroup,FormBuilder, FormArray } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { ControlType } from 'src/app/enums/control-type';
-import { MyPoll } from 'src/app/interfaces/my-poll';
+import { ControlType } from '../../enums/control-type';
+import { MyPoll } from '../../interfaces/my-poll';
 @Component({
   selector: 'app-setup',
   templateUrl: './setup.component.html',
