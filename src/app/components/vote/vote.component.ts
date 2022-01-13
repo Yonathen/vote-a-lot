@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { MyPoll } from 'src/app/interfaces/my-poll';
+import { MyPoll } from '../../interfaces/my-poll';
 
 @Component({
   selector: 'app-vote',

@@ -1,8 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { ControlType } from 'src/app/enums/control-type';
-import { storeServiceStub } from 'src/app/shared/test/store-service-stup';
 
 import { SetupComponent } from './setup.component';
 
@@ -17,8 +14,7 @@ describe('SetupComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
-      declarations: [ SetupComponent ],
-      providers: [{provide: Store, useValue: storeServiceStub}]
+      declarations: [ SetupComponent ]
     })
     .compileComponents();
   });
