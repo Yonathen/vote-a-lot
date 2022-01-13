@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { mockEmptyPollState, mockFilledPollState, storeServiceStub } from '../../shared/test/store-service-stup';
+import { mockEmptyPollState, mockFilledPollState } from '../../shared/test/store-service-stup';
 
 
 import { VoteComponent } from './vote.component';
